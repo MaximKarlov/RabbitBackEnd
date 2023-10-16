@@ -1,4 +1,5 @@
 const Rabbit = require('../models/Rabbit');
+const RabbitsBreed = require('../models/RabbitBreed');
 
 const { HttpError } = require('../helpers');
 
@@ -21,7 +22,7 @@ const getAllRabbitsBreed = async (req, res) => {
   const { _id: owner } = req.user;
   const { page = 1, limit = 10, ...query } = req.query;
   const skip = (page - 1) * limit;
-  const resultList = await Rabbit.find({ owner, ...query }, '-createdAt -updatedAt', { skip, limit }).populate(
+  const resultList = await RabbitsBreed.find({ owner, ...query }, '-createdAt -updatedAt', { skip, limit }).populate(
     'name',
     'breed'
   );
