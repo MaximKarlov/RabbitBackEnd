@@ -114,9 +114,9 @@ const resendVerify = async (req, res) => {
 };
 
 const getCurrent = async (req, res) => {
-  const { name, email, subscription } = req.user;
+  const { name, email, createdAt, avatarURL, subscription } = req.user;
 
-  res.json({ name, email, subscription });
+  res.json({ name, email, createdAt, avatarURL, subscription });
 };
 
 const logout = async (req, res) => {

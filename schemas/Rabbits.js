@@ -12,12 +12,15 @@ const rabbitSchema = Joi.object()
       'any.required': `missing required 'breed' field`,
       'string.empty': `'breed' cannot be an empty field`,
     }),
-
-    photoRabbit: Joi.string().min(6).required().messages({
-      'any.required': `missing required 'photoRabbit' field`,
-      'string.empty': `'photoRabbit' cannot be an empty field`,
+    gender: Joi.string().min(6).required().messages({
+      'any.required': `missing required 'gender' field`,
+      'string.empty': `'gender' cannot be an empty field`,
     }),
-    // favorite: Joi.boolean(),
+    dateBirthDay: Joi.string().min(6).required().messages({
+      'any.required': `missing required 'dateBirthDay' field`,
+      'string.empty': `'dateBirthDay' cannot be an empty field`,
+    }),
+    favorite: Joi.boolean(),
   });
 
 const contactsUpdateFavoriteSchema = Joi.object()

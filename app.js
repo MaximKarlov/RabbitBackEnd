@@ -15,7 +15,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/users', authRouter);
-app.use('/api/rabbits', RabbitRouter);
+app.use('/rabbits', RabbitRouter);
 
 app.use((req, res) => {
   res.status(404).json({ message: 'Not found this page' });

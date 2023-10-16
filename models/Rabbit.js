@@ -8,39 +8,59 @@ const RabbitSchema = new Schema(
       type: String,
       required: [true, 'Set name for rabbit'],
     },
+
+    gender: {
+      type: String,
+      required: [true, 'Set gender for rabbit'],
+    },
+
     breed: {
       type: String,
       required: [true, 'Set breed for rabbit'],
     },
-    photoRabbit: {
-      type: String,
-      required: [true, 'Set phone for rabbit'],
+
+    dateBirthDay: {
+      type: Date,
+      required: [true, 'Set date of BirthDay for rabbit'],
+      default: '00/00/2023',
     },
+    Mother: {
+      type: String,
+      required: [false, 'Set Mother for rabbit'],
+      default: 'unknown',
+    },
+    Father: {
+      type: Object,
+      required: [false, 'Set Father for rabbit'],
+      default: 'unknown',
+    },
+
     Vakcine: {
-      type: String,
-      required: [false, 'Set date vakcine for rabbit'],
+      type: Array,
     },
+
     weight: {
-      type: Number,
-      required: [false, 'Set weight for rabbit'],
+      type: Array,
     },
+
+    cage: {
+      type: Array,
+      required: [false, 'Set cage for rabbit'],
+    },
+
     favorite: {
       type: Boolean,
       default: false,
     },
-    // owner: {
-    //   type: Schema.Types.ObjectId,
-    //   ref: 'user',
-    //   required: true,
-    // },
-    Mother: {
+
+    photoRabbit: {
       type: String,
+      default: '',
     },
-    Father: {
-      type: Object,
-    },
-    dateBirthDay: {
-      type: Date,
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: 'user',
+      required: true,
     },
   },
   { versionKey: false, timestamps: true }

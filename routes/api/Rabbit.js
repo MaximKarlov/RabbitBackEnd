@@ -9,17 +9,19 @@ router.use(authenticate);
 
 router.get('/', rabbitController.getAllRabbits);
 
-router.get('/:contactId', isValidId, rabbitController.getRabbitById);
+router.get('/breed', rabbitController.getAllRabbitsBreed);
 
-router.post('/', validateBody(schema.rabbitSchema), rabbitController.addRabbit);
+router.get('/:rabbitId', isValidId, rabbitController.getRabbitById);
 
-router.put('/:contactId', isValidId, validateBody(schema.rabbitSchema), rabbitController.updateRabbit);
+router.post('/add', validateBody(schema.rabbitSchema), rabbitController.addRabbit);
+
+router.put('/:rabbitId', isValidId, validateBody(schema.rabbitSchema), rabbitController.updateRabbit);
 router.patch(
-  '/:contactId/favorite',
+  '/:rabbitId/favorite',
   isValidId,
   validateBody(schema.contactsUpdateFavoriteSchema),
   rabbitController.updateRabbitFavorite
 );
-router.delete('/:contactId', isValidId, rabbitController.deleteRabbit);
+router.delete('/:rabbitId', isValidId, rabbitController.deleteRabbit);
 
 module.exports = router;
