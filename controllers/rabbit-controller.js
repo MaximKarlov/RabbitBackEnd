@@ -14,7 +14,6 @@ const getAllRabbits = async (req, res) => {
     'name',
     'breed'
   );
-  console.log('resultList>>>>>>', resultList);
   res.json(resultList);
 };
 
@@ -22,7 +21,10 @@ const getAllRabbitsBreed = async (req, res) => {
   const { _id: owner } = req.user;
   const { page = 1, limit = 10, ...query } = req.query;
   const skip = (page - 1) * limit;
-  const resultList = await RabbitsBreed.find({ owner, ...query }, { skip, limit }).populate('name', 'color', 'about');
+  const resultList = await RabbitsBreed.find({ owner, ...query }, '-createdAt -updatedAt', { skip, limit }).populate(
+    'name',
+    'color'
+  );
   console.log('resultBreed>>>>>>', resultList);
   res.json(resultList);
 };
@@ -39,6 +41,12 @@ const getRabbitById = async (req, res) => {
 const addRabbit = async (req, res) => {
   const { _id: owner } = req.user;
   const addRabbitResult = await Rabbit.create({ ...req.body, owner });
+  res.status(201).json(addRabbitResult);
+};
+
+const addRabbitBreed = async (req, res) => {
+  const { _id: owner } = req.user;
+  const addRabbitResult = await RabbitsBreed.create({ ...req.body, owner });
   res.status(201).json(addRabbitResult);
 };
 
@@ -70,6 +78,7 @@ module.exports = {
   getAllRabbitsBreed: ctrlWrapper(getAllRabbitsBreed),
   getRabbitById: ctrlWrapper(getRabbitById),
   addRabbit: ctrlWrapper(addRabbit),
+  addRabbitBreed: ctrlWrapper(addRabbitBreed),
   deleteRabbit: ctrlWrapper(deleteRabbit),
   updateRabbit: ctrlWrapper(updateRabbit),
   updateRabbitFavorite: ctrlWrapper(updateRabbitFavorite),

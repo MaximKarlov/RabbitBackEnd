@@ -9,11 +9,13 @@ router.use(authenticate);
 
 router.get('/', rabbitController.getAllRabbits);
 
-router.get('/breed', rabbitController.getAllRabbitsBreed);
+router.get('/breeds', rabbitController.getAllRabbitsBreed);
 
 router.get('/:rabbitId', isValidId, rabbitController.getRabbitById);
 
 router.post('/add', validateBody(schema.rabbitSchema), rabbitController.addRabbit);
+
+router.post('/breed/add', validateBody(schema.rabbitBreedSchema), rabbitController.addRabbitBreed);
 
 router.put('/:rabbitId', isValidId, validateBody(schema.rabbitSchema), rabbitController.updateRabbit);
 router.patch(

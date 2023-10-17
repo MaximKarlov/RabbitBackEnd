@@ -32,4 +32,24 @@ const contactsUpdateFavoriteSchema = Joi.object()
     }),
   });
 
-module.exports = { rabbitSchema, contactsUpdateFavoriteSchema };
+const rabbitBreedSchema = Joi.object()
+  .min(1)
+  .keys({
+    name: Joi.string().min(2).required().messages({
+      'any.required': `missing required 'name' field`,
+      'string.empty': `'name' cannot be an empty field`,
+    }),
+
+    color: Joi.string().min(4).required().messages({
+      'any.required': `missing required 'color' field`,
+      'string.empty': `'color' cannot be an empty field`,
+    }),
+
+    about: Joi.string().messages({
+      'any.required': `missing required 'about' field`,
+      'string.empty': `'about' cannot be an empty field`,
+    }),
+    favorite: Joi.boolean(),
+  });
+
+module.exports = { rabbitSchema, contactsUpdateFavoriteSchema, rabbitBreedSchema };

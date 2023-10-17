@@ -16,7 +16,7 @@ const RabbitsBreedSchema = new Schema(
 
     about: {
       type: String,
-      required: [true, 'Set about for rabbit breed'],
+      required: [false, 'Set about for rabbit breed'],
     },
     owner: {
       type: Schema.Types.ObjectId,
@@ -24,11 +24,11 @@ const RabbitsBreedSchema = new Schema(
       required: true,
     },
   },
-  { versionKey: false, timestamps: true }
+  { versionKey: false }
 );
 
 RabbitsBreedSchema.post('save', handleMongooseError);
 
-const RabbitsBreed = model('RabbitBreed', RabbitsBreedSchema);
+const RabbitsBreed = model('breeds', RabbitsBreedSchema);
 
 module.exports = RabbitsBreed;
