@@ -48,6 +48,7 @@ const addRabbitBreed = async (req, res) => {
   const { _id: owner } = req.user;
   const addRabbitResult = await RabbitsBreed.create({ ...req.body, owner });
   res.status(201).json(addRabbitResult);
+  return res.status(201);
 };
 
 const updateRabbit = async (req, res) => {
