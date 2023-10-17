@@ -15,7 +15,7 @@ router.get('/:rabbitId', isValidId, rabbitController.getRabbitById);
 
 router.post('/add', validateBody(schema.rabbitSchema), rabbitController.addRabbit);
 
-router.post('/breed/add', validateBody(schema.rabbitBreedSchema), rabbitController.addRabbitBreed);
+router.post('/breeds/add', validateBody(schema.rabbitBreedSchema), rabbitController.addRabbitBreed);
 
 router.put('/:rabbitId', isValidId, validateBody(schema.rabbitSchema), rabbitController.updateRabbit);
 router.patch(
