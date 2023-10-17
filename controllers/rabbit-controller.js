@@ -8,23 +8,15 @@ const { ctrlWrapper } = require('../decorators');
 
 const getAllRabbits = async (req, res) => {
   const { _id: owner } = req.user;
-  const { page = 1, limit = 10, ...query } = req.query;
-  const skip = (page - 1) * limit;
-  const resultList = await Rabbit.find({ owner, ...query }, '-createdAt -updatedAt', { skip, limit }).populate(
-    'name',
-    'breed'
-  );
+  const { ...query } = req.query;
+  const resultList = await Rabbit.find({ owner, ...query }, '-createdAt -updatedAt').populate('name', 'breed');
   res.json(resultList);
 };
 
 const getAllRabbitsBreed = async (req, res) => {
   const { _id: owner } = req.user;
-  const { page = 1, limit = 10, ...query } = req.query;
-  const skip = (page - 1) * limit;
-  const resultList = await RabbitsBreed.find({ owner, ...query }, '-createdAt -updatedAt', { skip, limit }).populate(
-    'name',
-    'color'
-  );
+  const { ...query } = req.query;
+  const resultList = await RabbitsBreed.find({ owner, ...query }, '-createdAt -updatedAt').populate('name', 'color');
   console.log('resultBreed>>>>>>', resultList);
   res.json(resultList);
 };
