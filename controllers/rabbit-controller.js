@@ -22,12 +22,12 @@ const getAllRabbitsBreed = async (req, res) => {
 };
 
 const getRabbitById = async (req, res) => {
-  const contactId = req.params.contactId;
-  const getContactResult = await Rabbit.findById(contactId);
-  if (!getContactResult) {
+  const rabbitId = req.params.rabbitId;
+  const getRabbitResult = await Rabbit.findById(rabbitId);
+  if (!getRabbitResult) {
     throw HttpError(404);
   }
-  res.json(getContactResult);
+  res.json(getRabbitResult);
 };
 
 const addRabbit = async (req, res) => {
@@ -44,24 +44,24 @@ const addRabbitBreed = async (req, res) => {
 };
 
 const updateRabbit = async (req, res) => {
-  const contactId = req.params.contactId;
-  const updateContactResult = await Rabbit.findByIdAndUpdate(contactId, req.body, { new: true });
-  if (!updateContactResult) {
+  const rabbitId = req.params.rabbitId;
+  const updateRabbitResult = await Rabbit.findByIdAndUpdate(rabbitId, req.body, { new: true });
+  if (!updateRabbitResult) {
     throw HttpError(404);
-  } else res.json(updateContactResult);
+  } else res.json(updateRabbitResult);
 };
 
 const updateRabbitFavorite = async (req, res) => {
-  const contactId = req.params.contactId;
-  const updateContactResult = await Rabbit.findByIdAndUpdate(contactId, req.body, { new: true });
-  if (!updateContactResult) {
+  const rabbitId = req.params.rabbitId;
+  const updateRabbitResult = await Rabbit.findByIdAndUpdate(rabbitId, req.body, { new: true });
+  if (!updateRabbitResult) {
     throw HttpError(404);
-  } else res.json(updateContactResult);
+  } else res.json(updateRabbitResult);
 };
 
 const deleteRabbit = async (req, res) => {
   console.dir(req.params);
-  const RabbitId = req.params.contactId;
+  const RabbitId = req.params.rabbitId;
   const deleteRabbitResult = await Rabbit.findByIdAndDelete(RabbitId);
   if (deleteRabbitResult === null) {
     throw HttpError(404);
