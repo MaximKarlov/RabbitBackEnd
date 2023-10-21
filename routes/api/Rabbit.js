@@ -27,6 +27,10 @@ router.patch(
   validateBody(schema.contactsUpdateFavoriteSchema),
   rabbitController.updateRabbitFavorite
 );
-router.delete('/:rabbitId', isValidId, rabbitController.deleteRabbit);
+router.delete(
+  '/:rabbitId',
+  // isValidId,
+  rabbitController.deleteRabbit
+);
 
 module.exports = router;

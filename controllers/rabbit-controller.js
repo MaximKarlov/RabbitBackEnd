@@ -24,7 +24,6 @@ const getAllRabbitsBreed = async (req, res) => {
 const getRabbitById = async (req, res) => {
   const rabbitId = req.params.rabbitId;
   const getRabbitResult = await Rabbit.findById(rabbitId);
-  console.log(getRabbitResult);
   if (!getRabbitResult) {
     throw HttpError(404);
   }
