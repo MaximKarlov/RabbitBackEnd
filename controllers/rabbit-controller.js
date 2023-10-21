@@ -60,11 +60,12 @@ const updateRabbitFavorite = async (req, res) => {
 };
 
 const deleteRabbit = async (req, res) => {
-  const contactId = req.params.contactId;
-  const deleteContactResult = await Rabbit.findByIdAndDelete(contactId);
-  if (deleteContactResult === null) {
+  console.dir(req.params);
+  const RabbitId = req.params.contactId;
+  const deleteRabbitResult = await Rabbit.findByIdAndDelete(RabbitId);
+  if (deleteRabbitResult === null) {
     throw HttpError(404);
-  } else res.status(200).json({ message: 'contact deleted' });
+  } else res.status(200).json({ message: 'Rabbit deleted' });
 };
 module.exports = {
   getAllRabbits: ctrlWrapper(getAllRabbits),
