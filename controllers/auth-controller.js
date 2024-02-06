@@ -77,7 +77,7 @@ const signin = async (req, res) => {
 
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '1h' });
   await User.findByIdAndUpdate(id, { token });
-  res.json({ token, user: { email, subscription } });
+  res.json({ token, user: { email, name, subscription } });
 };
 
 const verify = async (req, res) => {
