@@ -69,7 +69,7 @@ const signin = async (req, res) => {
     throw HttpError(401, 'Email or password is wrong');
   }
 
-  const { _id: id, subscription } = user;
+  const { _id: id, name } = user;
 
   const payload = {
     id,
@@ -77,7 +77,7 @@ const signin = async (req, res) => {
 
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '1h' });
   await User.findByIdAndUpdate(id, { token });
-  res.json({ token, user: { email, name, subscription } });
+  res.json({ token, user: { email, name } });
 };
 
 const verify = async (req, res) => {
