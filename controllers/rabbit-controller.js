@@ -60,12 +60,18 @@ const updateRabbitFavorite = async (req, res) => {
 };
 
 const deleteRabbit = async (req, res) => {
-  console.dir(req.params);
   const RabbitId = req.params.rabbitId;
   const deleteRabbitResult = await Rabbit.findByIdAndDelete(RabbitId);
   if (deleteRabbitResult === null) {
     throw HttpError(404);
   } else res.status(200).json({ message: 'Rabbit deleted' });
+};
+const deleteRabbitBreed = async (req, res) => {
+  const BreedId = req.params.breedId;
+  const deleteResult = await RabbitsBreed.findByIdAndDelete(BreedId);
+  if (deleteResult === null) {
+    throw HttpError(404);
+  } else res.status(200).json({ message: 'Breed deleted' });
 };
 module.exports = {
   getAllRabbits: ctrlWrapper(getAllRabbits),
@@ -74,6 +80,7 @@ module.exports = {
   addRabbit: ctrlWrapper(addRabbit),
   addRabbitBreed: ctrlWrapper(addRabbitBreed),
   deleteRabbit: ctrlWrapper(deleteRabbit),
+  deleteRabbitBreed: ctrlWrapper(deleteRabbitBreed),
   updateRabbit: ctrlWrapper(updateRabbit),
   updateRabbitFavorite: ctrlWrapper(updateRabbitFavorite),
 };

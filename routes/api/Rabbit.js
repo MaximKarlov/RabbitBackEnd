@@ -11,6 +11,7 @@ router.get('/', rabbitController.getAllRabbits);
 
 router.get('/breeds', rabbitController.getAllRabbitsBreed);
 router.post('/breeds/add', validateBody(schema.rabbitBreedSchema), rabbitController.addRabbitBreed);
+router.delete('/breeds/:breedId', rabbitController.deleteRabbitBreed);
 
 router.get(
   '/:rabbitId',
