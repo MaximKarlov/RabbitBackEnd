@@ -16,7 +16,6 @@ const RabbitsBreedSchema = new Schema(
 
     about: {
       type: String,
-      required: [false, 'Set about for rabbit breed'],
     },
     owner: {
       type: Schema.Types.ObjectId,

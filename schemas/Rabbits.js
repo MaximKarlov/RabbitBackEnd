@@ -20,17 +20,17 @@ const rabbitSchema = Joi.object()
       'any.required': `missing required 'dateBirthDay' field`,
       'string.empty': `'dateBirthDay' cannot be an empty field`,
     }),
-    favorite: Joi.boolean(),
+    // favorite: Joi.boolean(),
   });
 
-const contactsUpdateFavoriteSchema = Joi.object()
-  .min(1)
-  .keys({
-    favorite: Joi.boolean().required().messages({
-      'any.required': `missing required 'favorite' field`,
-      'string.empty': `'favorite' cannot be an empty field`,
-    }),
-  });
+// const contactsUpdateFavoriteSchema = Joi.object()
+//   .min(1)
+//   .keys({
+//     favorite: Joi.boolean().required().messages({
+//       'any.required': `missing required 'favorite' field`,
+//       'string.empty': `'favorite' cannot be an empty field`,
+//     }),
+//   });
 
 const rabbitBreedSchema = Joi.object()
   .min(1)
@@ -46,10 +46,10 @@ const rabbitBreedSchema = Joi.object()
     }),
 
     about: Joi.string().messages({
-      'any.required': `missing required 'about' field`,
       'string.empty': `'about' cannot be an empty field`,
+      'any.required': `missing required 'about' field`,
     }),
-    favorite: Joi.boolean(),
+    // favorite: Joi.boolean(),
   });
 
-module.exports = { rabbitSchema, contactsUpdateFavoriteSchema, rabbitBreedSchema };
+module.exports = { rabbitSchema, rabbitBreedSchema };
