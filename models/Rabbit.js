@@ -19,19 +19,19 @@ const RabbitSchema = new Schema(
       required: [true, 'Set breed for rabbit'],
     },
 
-    dateBirthDay: {
-      type: Date,
-      required: [true, 'Set date of BirthDay for rabbit'],
-      default: '00/00/2023',
-    },
-    Mother: {
+    // dateBirthDay: {
+    //   type: Date,
+    //   required: [true, 'Set date of BirthDay for rabbit'],
+    //   default: '00/00/2023',
+    // },
+    mother: {
       type: String,
-      required: [false, 'Set Mother for rabbit'],
+      // required: [false, 'Set Mother for rabbit'],
       default: 'unknown',
     },
-    Father: {
+    father: {
       type: Object,
-      required: [false, 'Set Father for rabbit'],
+      // required: [false, 'Set Father for rabbit'],
       default: 'unknown',
     },
 
@@ -43,10 +43,10 @@ const RabbitSchema = new Schema(
       type: Array,
     },
 
-    cage: {
-      type: Array,
-      required: [false, 'Set cage for rabbit'],
-    },
+    // cage: {
+    //   type: Array,
+    //   required: [false, 'Set cage for rabbit'],
+    // },
 
     favorite: {
       type: Boolean,

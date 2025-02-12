@@ -6,7 +6,9 @@ const { isValidId, authenticate } = require('../../middlewares');
 const router = express.Router();
 
 router.use(authenticate);
-
+// add Rabbit in base
+router.post('/add', validateBody(schema.rabbitSchema), rabbitController.addRabbit);
+// get all rabbits list
 router.get('/', rabbitController.getAllRabbits);
 // get all breeds
 router.get('/breeds', rabbitController.getAllRabbitsBreed);
@@ -26,8 +28,6 @@ router.get(
   // , isValidId,
   rabbitController.getRabbitById
 );
-
-router.post('/add', validateBody(schema.rabbitSchema), rabbitController.addRabbit);
 
 // router.put('/:rabbitId', isValidId, validateBody(schema.rabbitSchema), rabbitController.updateRabbit);
 // router.patch(

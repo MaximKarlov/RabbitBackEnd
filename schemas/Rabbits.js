@@ -12,14 +12,22 @@ const rabbitSchema = Joi.object()
       'any.required': `missing required 'breed' field`,
       'string.empty': `'breed' cannot be an empty field`,
     }),
-    gender: Joi.string().min(6).required().messages({
+    gender: Joi.string().min(4).required().messages({
       'any.required': `missing required 'gender' field`,
       'string.empty': `'gender' cannot be an empty field`,
     }),
-    dateBirthDay: Joi.string().min(6).required().messages({
-      'any.required': `missing required 'dateBirthDay' field`,
-      'string.empty': `'dateBirthDay' cannot be an empty field`,
+    mother: Joi.string().messages({
+      'any.required': `missing required 'mother' field`,
+      'string.empty': `'mother' cannot be an empty field`,
     }),
+    father: Joi.string().messages({
+      'any.required': `missing required 'father' field`,
+      'string.empty': `'father' cannot be an empty field`,
+    }),
+    // dateBirthDay: Joi.string().min(6).required().messages({
+    //   'any.required': `missing required 'dateBirthDay' field`,
+    //   'string.empty': `'dateBirthDay' cannot be an empty field`,
+    // }),
     // favorite: Joi.boolean(),
   });
 
