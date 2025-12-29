@@ -5,6 +5,8 @@ require('dotenv').config();
 
 const authRouter = require('./routes/api/auth-route');
 const RabbitRouter = require('./routes/api/Rabbit');
+const FeedsRouter = require('./routes/api/Feeds');
+const tuyaRouter =  require('./routes/api/tuya')
 
 const app = express();
 
@@ -16,6 +18,8 @@ app.use(express.json());
 
 app.use('/users', authRouter);
 app.use('/rabbits', RabbitRouter);
+app.use('/feeds', FeedsRouter);
+app.use('/tuya', tuyaRouter);
 
 app.use((req, res) => {
   res.status(404).json({ message: 'Not found this page' });
