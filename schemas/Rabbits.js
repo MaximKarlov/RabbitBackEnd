@@ -31,15 +31,6 @@ const rabbitSchema = Joi.object()
     // favorite: Joi.boolean(),
   });
 
-// const contactsUpdateFavoriteSchema = Joi.object()
-//   .min(1)
-//   .keys({
-//     favorite: Joi.boolean().required().messages({
-//       'any.required': `missing required 'favorite' field`,
-//       'string.empty': `'favorite' cannot be an empty field`,
-//     }),
-//   });
-
 const rabbitBreedSchema = Joi.object()
   .min(1)
   .keys({

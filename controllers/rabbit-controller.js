@@ -1,8 +1,6 @@
 const Rabbit = require('../models/Rabbit');
 const RabbitsBreed = require('../models/RabbitBreed');
-
 const { HttpError } = require('../helpers');
-
 const { ctrlWrapper } = require('../decorators');
 // const { query } = require('express');
 
