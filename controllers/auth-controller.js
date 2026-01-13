@@ -10,7 +10,7 @@ const Jimp = require('jimp');
 
 const jwt = require('jsonwebtoken');
 
-const { SECRET_KEY, BASE_URL } = process.env;
+const { SECRET_KEY} = process.env;
 
 const User = require('../models/user');
 
@@ -42,7 +42,7 @@ const signup = async (req, res) => {
     to: email,
     subject: 'Verification email',
     html: `<p>Вітає вас програма обліку кроликів господарства. Для підтвердження реєстрації перейдіть по силці нижче.</p>
-    <a target="_blank" href="${BASE_URL}/users/verify/${verificationCode}">Click to verificate email</a>`,
+    <a target="_blank" href="https://maximkarlov.github.io/RabbitFrontEnd/users/verify/${verificationCode}">Click to verificate email</a>`,
   };
 
     await sendEmail(verifyEmail);
@@ -107,7 +107,7 @@ const resendVerify = async (req, res) => {
     to: email,
     subject: 'Verification email',
     html: `<p>Вас вітає програма обліку кроликів у господарстві. Для підтвердження реєстрації перейдіть по силці нижче.</p>
-    <a target="_blank" href="${BASE_URL}/users/verify/${user.verificationToken}">Click to verificate email</a>`,
+    <a target="_blank" href="https://maximkarlov.github.io/RabbitFrontEnd/users/verify/${user.verificationToken}">Click to verificate email</a>`,
   };
 
   await sendEmail(verifyEmail);
