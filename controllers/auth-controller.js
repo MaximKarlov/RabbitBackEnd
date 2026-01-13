@@ -45,7 +45,6 @@ const signup = async (req, res) => {
     <a target="_blank" href="${BASE_URL}/users/verify/${verificationCode}">Click to verificate email</a>`,
   };
 
-  if (newUser) {
     await sendEmail(verifyEmail);
 
   res.status(201).json({
@@ -54,7 +53,6 @@ const signup = async (req, res) => {
       subscription: newUser.subscription,
     },
   });
-}
 };
 
 const signin = async (req, res) => {
