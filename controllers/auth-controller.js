@@ -38,7 +38,7 @@ const signup = async (req, res) => {
     <a target="_blank" href="https://maximkarlov.github.io/RabbitFrontEnd/users/verify/${verificationCode}">Click to verificate email</a>`,
   };
 
-  await sendEmail(verifyEmail);
+  sendEmail(verifyEmail);
 
   const newUser = await User.create({
     ...req.body,
