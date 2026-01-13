@@ -29,7 +29,7 @@ const signup = async (req, res) => {
 
   const verificationCode = nanoid();
 
-  const userAvatar = gravatar.url(user, { s: '100', r: 'x', d: 'retro' }, true);
+  const userAvatar = gravatar.url(email, { s: '100', r: 'x', d: 'retro' }, true);
 
   const newUser = await User.create({
     ...req.body,
@@ -41,10 +41,11 @@ const signup = async (req, res) => {
   const verifyEmail = {
     to: email,
     subject: 'Verification email',
-    html: `<a target="_blank" href="${BASE_URL}/users/verify/${verificationCode}">Click to verificate email</a>`,
+    html: `<p>Вітає вас програма обліку кроликів господарства. Для підтвердження реєстрації перейдіть по силці нижче.</p>
+    <a target="_blank" href="${BASE_URL}/users/verify/${verificationCode}">Click to verificate email</a>`,
   };
 
-  await sendEmail(verifyEmail);
+  if (newUser) await sendEmail(verifyEmail);
 
   res.status(201).json({
     user: {
@@ -58,7 +59,7 @@ const signin = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
   if (!user) {
-    throw HttpError(401, 'Email or password is wrong');
+    throw HttpError(401, 'This USER not find');
   }
   if (!user.verify) {
     throw HttpError(401, 'Email, not verified');
@@ -86,9 +87,9 @@ const verify = async (req, res) => {
   if (!user) {
     throw HttpError(404, 'User not found');
   }
-  await User.findByIdAndUpdate(user._id, { verify: true, verificationToken: '' });
+  await User.findByIdAndUpdate(user._id, { verify: true, verificationToken: '', subscription: "user" });
 
-  res.status(200).json({ message: 'Verification successful' });
+  res.redirect(`${process.env.FRONTEND_URL}`);
 };
 
 const resendVerify = async (req, res) => {
@@ -105,7 +106,8 @@ const resendVerify = async (req, res) => {
   const verifyEmail = {
     to: email,
     subject: 'Verification email',
-    html: `<a target="_blank" href="${BASE_URL}/users/verify/${user.verificationToken}">Click to verificate email</a>`,
+    html: `<p>Вас вітає програма обліку кроликів у господарстві. Для підтвердження реєстрації перейдіть по силці нижче.</p>
+    <a target="_blank" href="${BASE_URL}/users/verify/${user.verificationToken}">Click to verificate email</a>`,
   };
 
   await sendEmail(verifyEmail);
@@ -147,6 +149,7 @@ const changeAvatar = async (req, res) => {
 
   res.status(200).json({ avatarURL });
 };
+
 
 module.exports = {
   signup: ctrlWrapper(signup),

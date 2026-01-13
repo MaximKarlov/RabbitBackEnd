@@ -1,30 +1,33 @@
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 
-const { EMAIL_HOST, EMAIL_PORT, EMAIL_UKRNET_NAME, EMAIL_UKRNET_PASSWORD } = process.env;
+const { EMAIL_HOST, EMAIL_PORT, EMAIL_GMAIL_NAME, EMAIL_GMAIL_PASSWORD } = process.env;
 
-const nodemailerConfig = {
+const transport = nodemailer.createTransport({
   host: EMAIL_HOST,
   port: EMAIL_PORT,
-  secure: true,
+  secure: true, // порт 465 вимагає SSL
   auth: {
-    user: EMAIL_UKRNET_NAME,
-    pass: EMAIL_UKRNET_PASSWORD,
+    user: EMAIL_GMAIL_NAME,
+    pass: EMAIL_GMAIL_PASSWORD,
   },
-};
-
-const transport = nodemailer.createTransport(nodemailerConfig);
+  tls: {
+    rejectUnauthorized: false, // ігнорує самопідписані сертифікати
+  },
+});
 
 const sendEmail = async data => {
-  const email = { ...data, from: EMAIL_UKRNET_NAME };
-  await transport
-    .sendMail(email)
-    .then(() => {
-      console.log('Send mail successfully');
-    })
-    .catch(err => {
-      console.log(err.message);
-    });
+  const email = {
+    ...data,
+    from: EMAIL_GMAIL_NAME,
+  };
+
+  try {
+    await transport.sendMail(email);
+    console.log('Send mail successfully');
+  } catch (err) {
+    console.error('Error sending mail:', err.message);
+  }
 };
 
 module.exports = sendEmail;
