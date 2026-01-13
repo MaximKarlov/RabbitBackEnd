@@ -31,13 +31,6 @@ const signup = async (req, res) => {
 
   const userAvatar = gravatar.url(email, { s: '100', r: 'x', d: 'retro' }, true);
 
-  const newUser = await User.create({
-    ...req.body,
-    password: hashPassword,
-    avatarURL: userAvatar,
-    verificationToken: verificationCode,
-  });
-
   const verifyEmail = {
     to: email,
     subject: 'Verification email',
@@ -45,7 +38,14 @@ const signup = async (req, res) => {
     <a target="_blank" href="https://maximkarlov.github.io/RabbitFrontEnd/users/verify/${verificationCode}">Click to verificate email</a>`,
   };
 
-    await sendEmail(verifyEmail);
+  await sendEmail(verifyEmail);
+
+  const newUser = await User.create({
+    ...req.body,
+    password: hashPassword,
+    avatarURL: userAvatar,
+    verificationToken: verificationCode,
+  });
 
   res.status(201).json({
     user: {
