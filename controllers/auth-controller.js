@@ -10,11 +10,14 @@ const Jimp = require('jimp');
 
 const jwt = require('jsonwebtoken');
 
-const { SECRET_KEY} = process.env;
+const { SECRET_KEY, VERIFICATION_URL } = process.env;
 
 const User = require('../models/user');
 
-const { HttpError, sendEmail } = require('../helpers');
+const { HttpError} = require('../helpers');
+
+const {sendEmail, reSend } = require('../helpers/sendEmail');
+
 
 const { ctrlWrapper } = require('../decorators');
 
@@ -35,10 +38,10 @@ const signup = async (req, res) => {
     to: email,
     subject: 'Verification email',
     html: `<p>Вітає вас програма обліку кроликів господарства. Для підтвердження реєстрації перейдіть по силці нижче.</p>
-    <a target="_blank" href="https://maximkarlov.github.io/RabbitFrontEnd/users/verify/${verificationCode}">Click to verificate email</a>`,
+    <a target="_blank" href="${VERIFICATION_URL}/users/verify/${verificationCode}">Click to verificate email</a>`,
   };
 
-  sendEmail(verifyEmail);
+  await sendEmail(verifyEmail);
 
   const newUser = await User.create({
     ...req.body,
@@ -47,27 +50,32 @@ const signup = async (req, res) => {
     verificationToken: verificationCode,
   });
 
-  res.status(201).json({
+  return res.status(201).json({
     user: {
       email: newUser.email,
       subscription: newUser.subscription,
     },
   });
+
 };
 
 const signin = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
   if (!user) {
-    throw HttpError(401, 'This USER not find');
+    throw HttpError(401, 'User not found');
   }
   if (!user.verify) {
-    throw HttpError(401, 'Email, not verified');
+    return res.redirect(`${process.env.RESENDEMAIL_URL}`);
   }
 
   const passwordCompare = await bcrypt.compare(password, user.password);
   if (!passwordCompare) {
     throw HttpError(401, 'Email or password is wrong');
+  }
+
+  if (!SECRET_KEY) {
+    throw HttpError(402,'SECRET_KEY is not defined');
   }
 
   const { _id: id, name } = user;
@@ -78,7 +86,7 @@ const signin = async (req, res) => {
 
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '1h' });
   await User.findByIdAndUpdate(id, { token });
-  res.json({ token, user: { email, name } });
+ return res.json({ token, user: { email, name } });
 };
 
 const verify = async (req, res) => {
@@ -92,12 +100,36 @@ const verify = async (req, res) => {
   res.redirect(`${process.env.FRONTEND_URL}`);
 };
 
-const resendVerify = async (req, res) => {
-  const { email } = req.body;
+// const resendVerify = async (req, res) => {
+//   const { email } = req.body;
+//   const user = await User.findOne({ email });
+
+//   if (!user) {
+//     throw HttpError(404);
+//   }
+//   if (user.verify) {
+//     throw HttpError(400, 'Verification has already been passed');
+//   }
+
+//   const verifyEmail = {
+//     to: email,
+//     subject: 'Verification email',
+//     html: `<p>Вас вітає програма обліку кроликів у господарстві. Для підтвердження реєстрації перейдіть по силці нижче.</p>
+//     <a target="_blank" href="https://maximkarlov.github.io/RabbitFrontEnd/users/verify/${user.verificationToken}">Click to verificate email</a>`,
+//   };
+
+//   await reSend(verifyEmail);
+
+//   // res.status(200).json({ message: 'Verification email sent' });
+//   res.redirect(`${process.env.FRONTEND_URL}`);
+// };
+
+const reSendEmail = async (req,res) => {
+  const {email} = req.body;
   const user = await User.findOne({ email });
 
   if (!user) {
-    throw HttpError(404);
+    throw HttpError(404,'Такого користувача не існує');
   }
   if (user.verify) {
     throw HttpError(400, 'Verification has already been passed');
@@ -107,10 +139,10 @@ const resendVerify = async (req, res) => {
     to: email,
     subject: 'Verification email',
     html: `<p>Вас вітає програма обліку кроликів у господарстві. Для підтвердження реєстрації перейдіть по силці нижче.</p>
-    <a target="_blank" href="https://maximkarlov.github.io/RabbitFrontEnd/users/verify/${user.verificationToken}">Click to verificate email</a>`,
+    <a target="_blank" href="${VERIFICATION_URL}/users/verify/${user.verificationToken}">Click to verificate email</a>`,
   };
 
-  await sendEmail(verifyEmail);
+  await reSend(verifyEmail);
 
   res.status(200).json({ message: 'Verification email sent' });
 };
@@ -155,7 +187,8 @@ module.exports = {
   signup: ctrlWrapper(signup),
   signin: ctrlWrapper(signin),
   verify: ctrlWrapper(verify),
-  resendVerify: ctrlWrapper(resendVerify),
+  // resendVerify: ctrlWrapper(resendVerify),
+  reSendEmail: ctrlWrapper(reSendEmail),
   getCurrent: ctrlWrapper(getCurrent),
   logout: ctrlWrapper(logout),
   changeAvatar: ctrlWrapper(changeAvatar),

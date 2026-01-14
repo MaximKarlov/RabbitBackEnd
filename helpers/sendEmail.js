@@ -30,4 +30,19 @@ const sendEmail = async data => {
   }
 };
 
-module.exports = sendEmail;
+
+const reSend = async (data) => {
+  const email = {
+    ...data,
+    from: EMAIL_GMAIL_NAME,
+  };
+  
+  try {
+    await transport.sendMail(email);
+    console.log('Send mail successfully');
+  } catch (err) {
+    console.error('Error sending mail:', err.message);
+  }
+};
+
+module.exports = {sendEmail, reSend};

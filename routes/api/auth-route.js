@@ -11,9 +11,10 @@ router.post('/register', validateBody(schema.UserRegisterSchema), authController
 
 router.get('/verify/:verificationToken', authController.verify);
 
-router.post('/verify', validateBody(schema.UserEmailSchema), authController.resendVerify);
+// router.post('/verify', validateBody(schema.UserEmailSchema), authController.resendVerify);
 
 router.post('/login', validateBody(schema.UserLoginSchema), authController.signin);
+router.post('/login/resend', authController.reSendEmail);
 
 router.get('/current', authenticate, authController.getCurrent);
 
