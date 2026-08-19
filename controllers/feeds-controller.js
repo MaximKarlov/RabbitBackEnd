@@ -25,20 +25,22 @@ const addFeed = async (req, res) => {
 };
 
 const getFeedById = async (req, res) => {
-  const rabbitBreedId = req.params.breedId;
-  const getRabbitResult = await Feeds.findById(rabbitBreedId);
-  if (!getRabbitResult) {
+  const feedsId = req.params.feedsId;
+  const getfeedsResult = await Feeds.findById(feedsId);
+  if (!getfeedsResult) {
     throw HttpError(404);
   }
-  res.json(getRabbitResult);
+  res.json(getfeedsResult);
 };
 
 const updateFeed = async (req, res) => {
-  const rabbitBreedId = req.params.breedId;
-  const updateRabbitResult = await Feeds.findByIdAndUpdate(rabbitBreedId, req.body, { new: true });
-  if (!updateRabbitResult) {
+  console.log(req.params.feedsId);
+  const feedsId = req.params.feedsId;
+  console.log(feedsId);
+  const updateFeedsResult = await Feeds.findByIdAndUpdate(feedsId, req.body, { new: true });
+  if (!updateFeedsResult) {
     throw HttpError(404);
-  } else res.json(updateRabbitResult);
+  } else res.json(updateFeedsResult);
 };
 
 const deleteFeed = async (req, res) => {

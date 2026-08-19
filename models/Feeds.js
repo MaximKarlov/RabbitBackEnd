@@ -18,10 +18,18 @@ const FeedsSchema = new Schema(
       type: String,
       required: [true, 'Set price for bay feeds'],
     },
+    bags: {
+      type: String,
+      required: [true, 'Set Bags for bay feeds'],
+    },
 
     quantity: {
       type: String,
       required: [true, 'Set quantity for bay feeds'],
+    },
+    suma: {
+      type: String,
+      required: [true, 'Set suma for bay feeds'],
     },
     owner: {
       type: Schema.Types.ObjectId,

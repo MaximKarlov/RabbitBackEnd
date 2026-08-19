@@ -16,8 +16,16 @@ const FeedsSchema = Joi.object()
       'any.required': `missing required 'price' field`,
       'string.empty': `'price' cannot be an empty field`,
     }),
+    bags: Joi.string().required().messages({
+      'any.required': `missing required 'quantityBags' field`,
+      'string.empty': `'quantityBags' cannot be an empty field`,
+    }),
 
     quantity: Joi.string().messages({
+      'string.empty': `'quantity' cannot be an empty field`,
+      'any.required': `missing required 'quantity' field`,
+    }),
+    suma: Joi.string().messages({
       'string.empty': `'quantity' cannot be an empty field`,
       'any.required': `missing required 'quantity' field`,
     }),

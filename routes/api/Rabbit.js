@@ -2,7 +2,7 @@ const express = require('express');
 const rabbitController = require('../../controllers/rabbit-controller');
 const schema = require('../../schemas/Rabbits');
 const { validateBody } = require('../../decorators');
-const { isValidId, authenticate } = require('../../middlewares');
+const { authenticate } = require('../../middlewares');
 const router = express.Router();
 
 router.use(authenticate);
@@ -19,7 +19,7 @@ router.post('/breeds/add', validateBody(schema.rabbitBreedSchema), rabbitControl
 // find breed rabbits by id
 router.get('/breeds/:breedId', rabbitController.getRabbitBreedById);
 // update breed rabbits
-router.put('/breeds/:breedId', isValidId, validateBody(schema.rabbitBreedSchema), rabbitController.updateRabbitBreed);
+router.put('/breeds/:breedId', validateBody(schema.rabbitBreedSchema), rabbitController.updateRabbitBreed);
 // delete breed rabbits
 router.delete('/breeds/:breedId', rabbitController.deleteRabbitBreed);
 
